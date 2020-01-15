@@ -78,5 +78,5 @@
       "label": "Bastion host key",
       "secured": false,
       "required": false
-    }
+    }]
     }

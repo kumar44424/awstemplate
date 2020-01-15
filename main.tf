@@ -83,10 +83,7 @@ variable "public_key_name" {
 variable "public_key" {
   description = "Public SSH key used to connect to the servers"
 }
-  
-  variable "VPC_CIDR" {
-    default = "10.0.0.0/16"
-}
+
 
 #variable "aws_vpc_id" {
 #    default = "Terraform_PaloAlto"

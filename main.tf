@@ -35,7 +35,7 @@ module "camtags" {
 #########################################################
 variable "aws_region" {
   description = "AWS region to launch servers"
-  default     = "ap-south-1a"
+  default     = "ap-south-1"
 }
 
 #Variable : AWS image name
@@ -109,7 +109,7 @@ variable "VPC_SUBNET_PRIVATE" {
 #variable "aws_internet_gateway_id" {}
 
 variable "AWS_REGION" {
-    default = "ap-south-1a"
+    default = "ap-south-1"
 }
 #variable "PATH_TO_PRIVATE_KEY" {}
 #variable "PATH_TO_PUBLIC_KEY" {}
@@ -144,7 +144,7 @@ variable "FW_IMAGE_ID" {
     default = "ami-b25e7ed7"
 }
 variable "FW_NAME" {
-    default = "aws-paloalto-ap-south-1a"
+    default = "aws-paloalto-ap-south-1"
 }
 
   
@@ -184,7 +184,7 @@ resource "aws_subnet" "cam_aws_subnet_public" {
     vpc_id = "${aws_vpc.cam_aws.id}"
     cidr_block = "${var.VPC_SUBNET_PUBLIC}"
     map_public_ip_on_launch = "true"
-    availability_zone = "ap-south-1a"
+    availability_zone = "ap-south-1"
 
     tags {
         Name = "test-subnet-public"
@@ -199,7 +199,7 @@ resource "aws_subnet" "cam_aws_subnet_private" {
     vpc_id = "${aws_vpc.cam_aws.id}"
     cidr_block = "${var.VPC_SUBNET_PRIVATE}"
     map_public_ip_on_launch = "false"
-    availability_zone = "ap-south-1a"
+    availability_zone = "ap-south-1"
 
     tags {
         Name = "cam_aws-subnet-private"

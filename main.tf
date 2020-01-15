@@ -70,19 +70,20 @@ variable "aws_region" {
 #  default     = "lampDb"
 #}
 
-variable "network_name_prefix" {
-  description = "The prefix of names for VPC, Gateway, Subnet and Security Group"
-  default     = "opencontent-lamp"
-}
+#variable "network_name_prefix" {
+#  description = "The prefix of names for VPC, Gateway, Subnet and Security Group"
+#  default     = "opencontent-lamp"
 
-variable "public_key_name" {
-  description = "Name of the public SSH key used to connect to the servers"
-  default     = "cam-public-key-lamp"
-}
+#}
 
-variable "public_key" {
-  description = "Public SSH key used to connect to the servers"
-}
+#variable "public_key_name" {
+#  description = "Name of the public SSH key used to connect to the servers"
+#  default     = "cam-public-key-lamp"
+#}
+
+#variable "public_key" {
+#  description = "Public SSH key used to connect to the servers"
+#}
 
 
 #variable "aws_vpc_id" {

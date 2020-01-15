@@ -184,7 +184,7 @@ resource "aws_subnet" "cam_aws_subnet_public" {
     vpc_id = "${aws_vpc.cam_aws.id}"
     cidr_block = "${var.VPC_SUBNET_PUBLIC}"
     map_public_ip_on_launch = "true"
-    availability_zone = "ap-south-1"
+    availability_zone = "ap-south-1a"
 
     tags {
         Name = "test-subnet-public"
@@ -199,7 +199,7 @@ resource "aws_subnet" "cam_aws_subnet_private" {
     vpc_id = "${aws_vpc.cam_aws.id}"
     cidr_block = "${var.VPC_SUBNET_PRIVATE}"
     map_public_ip_on_launch = "false"
-    availability_zone = "ap-south-1"
+    availability_zone = "ap-south-1a"
 
     tags {
         Name = "cam_aws-subnet-private"

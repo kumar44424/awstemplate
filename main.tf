@@ -445,11 +445,8 @@ resource "aws_instance" "RHEL" {
     content = <<EOF
 #!/bin/bash
 #!/bin/sh
-#!/bin 
-username="cam-user" 
-password="cam-user" 
 useradd cam-user 
-echo $password | passwd $user
+echo -e "camuser\ncamuser" | passwd cam-user
 usermod -aG sudo cam-user
 
 EOF

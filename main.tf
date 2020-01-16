@@ -474,6 +474,6 @@ resource "aws_instance" "RHEL" {
 
 
     }
-
+    }
  
   

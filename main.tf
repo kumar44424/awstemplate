@@ -246,7 +246,7 @@ resource "aws_route_table_association" "acme_assc_public" {
     vpc_id = "${aws_vpc.cam_aws.id}"
     route {
       cidr_block = "0.0.0.0/0"
-      network_interface_id = "${aws_network_interface.acme_pafw_instance_private_id}"
+      network_interface_id = "${aws_network_interface.acme_pafw_instance_private.id}"
     }
     tags {
       Name = "acme-route-private"

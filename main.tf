@@ -444,11 +444,11 @@ resource "aws_instance" "RHEL" {
     content = <<EOF
 #!/bin/bash
 #!/bin/sh
-sudo useradd cam-user 
-sudo echo -e "camuser\ncamuser" | passwd cam-user
-sudo usermod -aG sudo cam-user
-sudo sed 's/#\?\(PasswordAuthentication\s*\).*$/\1 yes/‘ /etc/ssh/sshd_config > temp.txt 
-sudo mv -f temp.txt /etc/ssh/sshd_config
+sudo "useradd cam-user"
+sudo "echo -e "camuser\ncamuser" | passwd cam-user"
+sudo "usermod -aG sudo cam-user"
+sudo "sed 's/#\?\(PasswordAuthentication\s*\).*$/\1 yes/‘ /etc/ssh/sshd_config > temp.txt "
+sudo "mv -f temp.txt /etc/ssh/sshd_config"
 sudo reboot
 EOF
     destination = "/tmp/installation.sh"

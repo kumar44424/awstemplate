@@ -1,5 +1,5 @@
 {
-   "name": "Template of Templates - IBM Cloud",
+   "name": "Template of Templates - AWS",
    "description": "IBM Cloud",
    "version": "1.0",
    "imageUrl": "./assets/svg/IBM_WebSphere_Standalone.svg",
@@ -23,17 +23,17 @@
      }
    },
    "metadata": {
-     "displayName": "Template of Templates - IBM Cloud",
-     "providerDisplayName": "IBM",
+     "displayName": "Template of Templates - AWS",
+     "providerDisplayName": "AWS",
      "longDescription": "Deploys 3 OPerating systems Windows, RHEL and Cent OS on IBM Cloud.",
      "bullets": [
        {
          "title": "Clouds",
-         "description": "IBM Cloud/Softlayer"
+         "description": "AWS"
        },
        {
          "title": "Operating systems supported",
-         "description": "RedHat_7_64, Ubuntu_18_64, WIN_2012-STD-R2_64"
+         "description": "RedHat_7_64, CentOS, WIN_2012"
        },
        {
          "title": "Topology",

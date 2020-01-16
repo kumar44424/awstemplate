@@ -195,7 +195,7 @@ resource "aws_subnet" "cam_aws_subnet_public" {
 }
   
   # Internal subnet
-resource "aws_subnet" "cam_aws_subnet_private" {
+resource "aws_subnet" "cam_aws_subnet_private_inbound" {
     vpc_id = "${aws_vpc.cam_aws.id}"
     cidr_block = "${var.VPC_SUBNET_PRIVATE}"
     map_public_ip_on_launch = "false"
@@ -208,7 +208,21 @@ resource "aws_subnet" "cam_aws_subnet_private" {
         Project = "${var.PROJECT}"
     }
 }
+    # Internal subnet
+resource "aws_subnet" "cam_aws_subnet_private_outbound" {
+    vpc_id = "${aws_vpc.cam_aws.id}"
+    cidr_block = "${var.VPC_SUBNET_PRIVATE}"
+    map_public_ip_on_launch = "false"
+    availability_zone = "ap-south-1a"
 
+    tags {
+        Name = "cam_aws-subnet-private"
+        Owner = "${var.OWNER}"
+        Environment = "${var.ENVIRONMENT}"
+        Project = "${var.PROJECT}"
+    }
+}
+  
 
 # Creating the Amazon VPC Internet Gateway Attached to VPC
 resource "aws_internet_gateway" "cam_aws_gwy" {
@@ -246,7 +260,7 @@ resource "aws_route_table_association" "acme_assc_public" {
     vpc_id = "${aws_vpc.cam_aws.id}"
     route {
       cidr_block = "0.0.0.0/0"
-      network_interface_id = "${aws_network_interface.acme_pafw_instance_private_id}"
+      network_interface_id = "${aws_network_interface.acme_pafw_instance_private_inbound.id}"
     }
     tags {
       Name = "acme-route-private"
@@ -257,7 +271,7 @@ resource "aws_route_table_association" "acme_assc_public" {
 }
   # route associations private
 resource "aws_route_table_association" "acme_assc_private" {
-  subnet_id = "${aws_subnet.cam_aws_subnet_private.id}"
+  subnet_id = "${aws_subnet.cam_aws_subnet_private_inbound.id}"
   route_table_id = "${aws_route_table.acme_route_private.id}"
 }
 
@@ -328,8 +342,20 @@ resource "aws_network_interface" "acme_pafw_instance_public" {
     Project = "${var.PROJECT}"
   }
 }
-resource "aws_network_interface" "acme_pafw_instance_private" {
-  subnet_id = "${aws_subnet.cam_aws_subnet_private.id}"
+resource "aws_network_interface" "acme_pafw_instance_private_inbound" {
+  subnet_id = "${aws_subnet.cam_aws_subnet_private_inbound.id}"
+  private_ips = ["${var.FW_GWY_PRIVATE}"]
+  source_dest_check = "false"
+  security_groups = ["${aws_security_group.cam_aws_sg.id}"]
+  tags {
+    Name = "acme-pafw-instance-private-intf"
+    Owner = "${var.OWNER}"
+    Environment = "${var.ENVIRONMENT}"
+    Project = "${var.PROJECT}"
+  }
+}
+  resource "aws_network_interface" "acme_pafw_instance_private_outbound" {
+  subnet_id = "${aws_subnet.cam_aws_subnet_private_outbound.id}"
   private_ips = ["${var.FW_GWY_PRIVATE}"]
   source_dest_check = "false"
   security_groups = ["${aws_security_group.cam_aws_sg.id}"]
@@ -367,10 +393,13 @@ resource "aws_network_interface" "acme_pafw_instance_private" {
   }
 
   network_interface {
-    network_interface_id = "${aws_network_interface.acme_pafw_instance_private.id}"
+    network_interface_id = "${aws_network_interface.acme_pafw_instance_private_inbound.id}"
     device_index = 2
   }
-
+   network_interface {
+    network_interface_id = "${aws_network_interface.acme_pafw_instance_private_outbound.id}"
+    device_index = 3
+  }
 
   tags {
     Name = "pafw-instance"
@@ -399,12 +428,12 @@ resource "aws_eip_association" "acme_pafw_instance_eip1_assoc" {
 resource "aws_instance" "RHEL" {
   instance_type               = "t2.micro"
   ami                         = "ami-003b12a9a1ee83922"
-  subnet_id                   = "${aws_subnet.cam_aws_subnet_private.id}"
+  subnet_id                   = "${aws_subnet.cam_aws_subnet_private_outbound.id}"
   vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
   key_name                    = "${aws_key_pair.temp_public_key.id}"
   associate_public_ip_address = true
 
-  tags {
+    tags {
     Name = "RHEL-instance"
     Owner = "${var.OWNER}"
     Environment = "${var.ENVIRONMENT}"

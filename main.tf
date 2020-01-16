@@ -459,6 +459,7 @@ EOF
       "bash /tmp/installation.sh",
     ]
   }
+  }
   resource "aws_instance" "CentOS" {
   instance_type               = "t2.micro"
   ami                         = "ami-02e60be79e78fef21"
@@ -506,6 +507,7 @@ EOF
       "sudo bash /tmp/installation.sh",
     ]
   }
-}
+    }
+
  
   

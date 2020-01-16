@@ -405,26 +405,11 @@ resource "aws_instance" "RHEL" {
   ami                         = "ami-02e60be79e78fef21"
   subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
   vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
-  key_name                    = "${aws_key_pair.temp_public_key.id}"
+  key_name = "cam_aws"
   associate_public_ip_address = true
 
  tags {
     Name = "CENTOS-instance"
-    Owner = "${var.OWNER}"
-    Environment = "${var.ENVIRONMENT}"
-    Project = "${var.PROJECT}"
-  }}
-  
-    resource "aws_instance" "RHEL" {
-  instance_type               = "t2.micro"
-  ami                         = "ami-02e60be79e78fef21"
-  subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
-  vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
-  key_name                    = "${aws_key_pair.temp_public_key.id}"
-  associate_public_ip_address = true
-
- tags {
-    Name = "CentOS-instance"
     Owner = "${var.OWNER}"
     Environment = "${var.ENVIRONMENT}"
     Project = "${var.PROJECT}"
@@ -435,7 +420,7 @@ resource "aws_instance" "RHEL" {
   ami                         = "ami-06fea6d88c62d4e26"
   subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
   vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
-  key_name                    = "${aws_key_pair.temp_public_key.id}"
+  key_name = "cam_aws"
   associate_public_ip_address = true
 
  tags {
@@ -450,7 +435,7 @@ resource "aws_instance" "RHEL" {
   ami                         = "ami-0a8afc66668399657"
   subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
   vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
-  key_name                    = "${aws_key_pair.temp_public_key.id}"
+  key_name = "cam_aws"
   associate_public_ip_address = true
 
  tags {

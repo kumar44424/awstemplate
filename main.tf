@@ -418,16 +418,11 @@ resource "aws_instance" "RHEL" {
 #  subnet_id                   = "${aws_subnet.cam_aws_subnet_private.id}"
 #  vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
   key_name                    = "${aws_key_pair.temp_public_key.id}"
-#  associate_public_ip_address = true
-network_interface {
-  device_index = 0
-  network_interface_id = "${aws_network_interface.acme_FWPublicNetworkInterface.id}"
-}
-
- network_interface {
-    network_interface_id = "${aws_network_interface.acme_pafw_instance_public.id}"
-    device_index = 1
-  }
+ associate_public_ip_address = true
+  network_interface {
+    network_interface_id = "${aws_network_interface.acme_pafw_instance_private.id}"
+    device_index = 0
+ }
   tags {
     Name = "RHEL-instance"
     Owner = "${var.OWNER}"

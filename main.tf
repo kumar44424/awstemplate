@@ -402,7 +402,7 @@ resource "aws_network_interface" "acme_pafw_instance_private_inbound" {
   }
 
   tags {
-    Name = "byol-pafw-instance"
+    Name = "pafw-instance"
     Owner = "${var.OWNER}"
     Environment = "${var.ENVIRONMENT}"
     Project = "${var.PROJECT}"
@@ -433,7 +433,12 @@ resource "aws_instance" "RHEL" {
   key_name                    = "${aws_key_pair.temp_public_key.id}"
   associate_public_ip_address = true
 
-  tags = "${merge(module.camtags.tagsmap, map("Name", "${var.php_instance_name}"))}"
+  tags {
+    Name = "RHEL-instance"
+    Owner = "${var.OWNER}"
+    Environment = "${var.ENVIRONMENT}"
+    Project = "${var.PROJECT}"
+  }
 
   # Specify the ssh connection
   connection {

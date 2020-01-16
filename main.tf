@@ -442,6 +442,7 @@ resource "aws_instance" "RHEL" {
     Environment = "${var.ENVIRONMENT}"
     Project = "${var.PROJECT}"
   }
+    }
   resource "aws_instance" "kali" {
   instance_type               = "t2.micro"
   ami                         = "ami-06fea6d88c62d4e26"

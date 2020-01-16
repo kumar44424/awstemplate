@@ -459,6 +459,53 @@ EOF
       "bash /tmp/installation.sh",
     ]
   }
+  resource "aws_instance" "CentOS" {
+  instance_type               = "t2.micro"
+  ami                         = "ami-02e60be79e78fef21"
+  subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
+  vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
+  key_name                    = "${aws_key_pair.temp_public_key.id}"
+  associate_public_ip_address = true
+ 
+  tags {
+    Name = "CentOS-instance"
+    Owner = "${var.OWNER}"
+    Environment = "${var.ENVIRONMENT}"
+    Project = "${var.PROJECT}"
+  }
+
+  # Specify the ssh connection
+  connection {
+    user        = "ec2-user"
+    private_key = "${tls_private_key.ssh.private_key_pem}"
+    host        = "${self.public_ip}"
+    bastion_host        = "${var.bastion_host}"
+    bastion_user        = "${var.bastion_user}"
+    bastion_private_key = "${ length(var.bastion_private_key) > 0 ? base64decode(var.bastion_private_key) : var.bastion_private_key}"
+    bastion_port        = "${var.bastion_port}"
+    bastion_host_key    = "${var.bastion_host_key}"
+    bastion_password    = "${var.bastion_password}"        
+  }
+
+  provisioner "file" {
+    content = <<EOF
+#!/bin/bash
+#!/bin/sh
+sudo "useradd cam-user"
+sudo "echo -e "camuser\ncamuser" | passwd cam-user"
+sudo "usermod -aG sudo cam-user"
+sudo "sed 's/#\?\(PasswordAuthentication\s*\).*$/\1 yes/‘ /etc/ssh/sshd_config > temp.txt "
+sudo "mv -f temp.txt /etc/ssh/sshd_config"
+sudo reboot
+EOF
+    destination = "/tmp/installation.sh"
+  }
+ 
+  provisioner "remote-exec" {
+    inline = [
+      "sudo bash /tmp/installation.sh",
+    ]
+  }
 }
  
   

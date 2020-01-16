@@ -440,10 +440,6 @@ resource "aws_instance" "RHEL" {
     bastion_password    = "${var.bastion_password}"        
   }
 
-   # Create the installation script
-  
-    destination = "/tmp/installation.sh"
-  }
  
   provisioner "remote-exec" {
     inline = [

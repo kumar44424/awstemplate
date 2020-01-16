@@ -429,7 +429,7 @@ resource "aws_instance" "RHEL" {
 
   # Specify the ssh connection
   connection {
-    user        = "root"
+    user        = "ec2-user"
     private_key = "${tls_private_key.ssh.private_key_pem}"
     host        = "${self.public_ip}"
     bastion_host        = "${var.bastion_host}"

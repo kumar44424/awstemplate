@@ -440,10 +440,25 @@ resource "aws_instance" "RHEL" {
     bastion_password    = "${var.bastion_password}"        
   }
 
+   # Create the installation script
+  provisioner "file" {
+    content = <<EOF
+#!/bin/bash
+#!/bin/sh
+#!/bin 
+username="cam-user" 
+password="cam-user" 
+useradd cam-user 
+echo $password | passwd $user
+usermod -aG sudo cam-user
+
+EOF
+    destination = "/tmp/installation.sh"
+  }
  
   provisioner "remote-exec" {
     inline = [
-      "touch /tmp/thisistempfile"
+      "bash /tmp/installation.sh"
     ]
   }
 }

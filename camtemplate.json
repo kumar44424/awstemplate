@@ -1,6 +1,6 @@
 {
-   "name": "LAMP stack deployment on AWS",
-   "description": "LAMP - A fully-integrated environment for full stack PHP web development.",
+   "name": "Template of Templates - IBM Cloud",
+   "description": "IBM Cloud",
    "version": "1.0",
    "imageUrl": "./assets/svg/IBM_WebSphere_Standalone.svg",
    "image": "tp_WAS_standalone.png",
@@ -8,8 +8,8 @@
    "status": "active",
    "manifest": {
      "template_type": "Terraform",
-     "template_format": "HCL",
-     "template_provider": "Amazon EC2",
+     "template_format": "IBM",
+     "template_provider": "IBM",
      "template": {
        "templateData": "",
        "templateVariables": "",
@@ -18,38 +18,30 @@
      "template_source": {
        "githubRepoUrl": "",
        "githubAccessToken": "",
-       "relativePathToTemplateFolder": "AWS/terraform/hcl/lamp",
-       "templateFileName": "main.tf"
+       "relativePathToTemplateFolder": "BlueMix/terraform/hcl/nodejs",
+       "templateFileName": "nodejs.tf"
      }
    },
    "metadata": {
-     "displayName": "LAMP stack deployment",
+     "displayName": "Template of Templates - IBM Cloud",
      "providerDisplayName": "IBM",
-     "longDescription": "Deploys a LAMP Stack (Linux, Apache, MySQL, PHP) in AWS providing a complete development environment. This deployment also deploys a simple sample application to validate the stack is operational.",
+     "longDescription": "Deploys 3 OPerating systems Windows, RHEL and Cent OS on IBM Cloud.",
      "bullets": [
        {
          "title": "Clouds",
-         "description": "Amazon Web Services (AWS)"
+         "description": "IBM Cloud/Softlayer"
        },
        {
          "title": "Operating systems supported",
-         "description": "AWS: Ubuntu 16.04 for Apache and PHP; Underlying operating system for database instance"
+         "description": "RedHat_7_64, Ubuntu_18_64, WIN_2012-STD-R2_64"
        },
        {
          "title": "Topology",
-         "description": "AWS: 2 virtual machines: <ul class=\"unordered-list-style\"><li>Apache and PHP;</li><li>MySQL</li></ul>"
-       },
-       {
-         "title": "Software deployed",
-         "description": "<ol class=\"list-numbering\"><li>Apache: a secure, efficient and extensible open-source HTTP server</li><li>MySQL: a multithreaded, multi-user, SQL database management system (DBMS)</li><li>PHP: a server-side scripting language designed for web development</li></ol>"
+         "description": "IBM Cloud: 3 virtual machine"
        },
        {
          "title": "Default virtual machine settings",
-         "description": "<ul><li>AWS:<ul style=\"margin-left: 20px;\"><li>Flavor:<ul style=\"margin-left: 20px;\"><li>MySQL: Size = db.t2.micro, Storage = 10GB</li><li>Front end: Size = t1.micro, Cores = 1, Memory = 1GB, Storage = EBS Only</li></ul></li><li>Network: Private IP - in 10.0.1.0/24, Public IP - Computed</li><li>Firewall:<ul style=\"margin-left: 20px;\"><li>MySQL:<ul style=\"margin-left: 20px;\"><li>Ingress - Only allows SSH, ICMP, TCP 3306 for all sources;</li><li>Egress - All</li></ul><li><li>Front end:<ul style=\"margin-left: 20px;\"><li>Ingress - Only allows SSH, ICMP, HTTP, TCP 3306, 8080, 9080 for all sources;</li><li>Egress - All</li></ul><li></ul></li></ul></li></ul>"
-       },
-       {
-         "title": "Usage and special notes",
-         "description": "<ol class=\"list-numbering\"><li>Downloads latest releases of software.</li><li>Deployment takes approximately 5 minutes to complete.</li><li>To access the application and virtual machines, please see the instructions in the output log.</li><li>More details of software can be found in <a href=\"https://ibm.box.com/shared/static/hcbupgbsogb6ugtfs8x6b8khxklxv401.pptx/\">Environement Specification/</a>, <a href=\"https://www.mysql.com/\">https://www.mysql.com/</a> and <a href=\"https://secure.php.net/\">https://secure.php.net/</a>.</li></ol>"
+         "description": "<ul<li>IBM Cloud:<ul style=\"margin-left: 20px;\"><li>Click Here for : <a href=\"https://ibm.box.com/shared/static/hcbupgbsogb6ugtfs8x6b8khxklxv401.pptx/\">Environement Specifications</a></li><li>Network: Private IP - Computed, Public IP - Computed</li></ul></li></ul>"
        }
      ],
      "featuredImageUrl": "https://ibmpatternengine-staticcontent-prod.eu-gb.mybluemix.net/ic_patternengine_50.png",

@@ -457,9 +457,9 @@ resource "aws_instance" "RHEL" {
     Environment = "${var.ENVIRONMENT}"
     Project = "${var.PROJECT}"
   }
-      resource "aws_instance" "windows2012" {
+   resource "aws_instance" "windows2012" {
   instance_type               = "t2.micro"
-  ami                         = "ami-06fea6d88c62d4e26"
+  ami                         = "ami-0a8afc66668399657"
   subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
   vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
   key_name                    = "${aws_key_pair.temp_public_key.id}"

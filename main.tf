@@ -198,7 +198,7 @@ resource "aws_subnet" "cam_aws_subnet_public" {
 resource "aws_subnet" "cam_aws_subnet_private" {
     vpc_id = "${aws_vpc.cam_aws.id}"
     cidr_block = "${var.VPC_SUBNET_PRIVATE}"
-    map_public_ip_on_launch = "true"
+    map_public_ip_on_launch = "false"
     availability_zone = "ap-south-1a"
 
     tags {
@@ -208,7 +208,7 @@ resource "aws_subnet" "cam_aws_subnet_private" {
         Project = "${var.PROJECT}"
     }
 }
-
+  
 
 # Creating the Amazon VPC Internet Gateway Attached to VPC
 resource "aws_internet_gateway" "cam_aws_gwy" {
@@ -272,28 +272,12 @@ resource "aws_security_group" "cam_aws_sg" {
       protocol = "-1"
       cidr_blocks = ["0.0.0.0/0"]
   }
-
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
   }
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-
-
 
   tags {
     Name = "cam_aws-sg"
@@ -308,16 +292,6 @@ resource "aws_key_pair" "cam_aws_deployment" {
   key_name = "cam_aws"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCNovnxtCRrEL048khf2ZTXkn52RZ5Mt817wUhAbAMDcwhb8W4H8OomvqoCzNdsLxzk8WbmbHifrIF1UboEtgfajq0ZhHKz7VfYDG56Dp8iPq/1iVq6iTiZUoauEujeAAV5gYIZR+pQ9yPiHV98AEPomIq4hwM7MWOWLHjSnJvVx2Nl7iJ944rm5rdMUY1fiyQGJP+034l4+FoBRDeJDTMIaT1FnGkFXkpmavqtfXczKI51SKQaGqmq4vaVQUmTO6KRbpgr2iWW5GjL+T14ux2TPcb/dCj0zAxHwJ5xzcIPSMpiXdNn4UkRW1wBBEWdBHID4UhuGJFj6aOml+hHWkp pradeepkumarm"
 }
-  
-  resource "tls_private_key" "ssh" {
-  algorithm = "RSA"
-}
-
-resource "aws_key_pair" "temp_public_key" {
-  key_name   = "cam_aws-temp"
-  public_key = "${tls_private_key.ssh.public_key_openssh}"
-}
-
   
 resource "aws_network_interface" "acme_FWPublicNetworkInterface" {
   subnet_id       = "${aws_subnet.cam_aws_subnet_public.id}"
@@ -357,13 +331,13 @@ resource "aws_network_interface" "acme_pafw_instance_private" {
   }
 }
   
-resource "aws_instance" "pafw_instance" {
+ resource "aws_instance" "pafw_instance" {
   disable_api_termination = false
   ami = "ami-0b2a265d1f898c37f"
   instance_type = "m5.xlarge"
   instance_initiated_shutdown_behavior = "stop"
   key_name = "cam_aws"
- ebs_optimized = "true"
+  ebs_optimized = "true"
   ebs_block_device {
       device_name = "/dev/xvda"
       volume_type = "gp2"
@@ -387,13 +361,12 @@ resource "aws_instance" "pafw_instance" {
     device_index = 2
   }
 
-
   tags {
-    Name = "pafw-instance"
+    Name = "byol-pafw-instance"
     Owner = "${var.OWNER}"
     Environment = "${var.ENVIRONMENT}"
     Project = "${var.PROJECT}"
- }
+  }
 }
 
   resource "aws_eip_association" "acme_pafw_instance_eip_assoc" {
@@ -412,50 +385,6 @@ resource "aws_eip_association" "acme_pafw_instance_eip1_assoc" {
   allocation_id = "eipalloc-04d1950788b9eb2b0"
   allow_reassociation = true
 }
-resource "aws_instance" "RHEL" {
-  instance_type               = "t2.micro"
-  ami                         = "ami-003b12a9a1ee83922"
-  subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
-  vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
-  key_name                    = "${aws_key_pair.temp_public_key.id}"
-  associate_public_ip_address = true
- 
-  tags {
-    Name = "RHEL-instance"
-    Owner = "${var.OWNER}"
-    Environment = "${var.ENVIRONMENT}"
-    Project = "${var.PROJECT}"
-  }
 
-  }
-  resource "aws_instance" "CentOS" {
-  instance_type               = "t2.micro"
-  ami                         = "ami-02e60be79e78fef21"
-  subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
-  vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
-  key_name                    = "${aws_key_pair.temp_public_key.id}"
-  associate_public_ip_address = true
  
-  tags {
-    Name = "CentOS-instance"
-    Owner = "${var.OWNER}"
-    Environment = "${var.ENVIRONMENT}"
-    Project = "${var.PROJECT}"
-  }
-    }
   
-   resource "aws_instance" "windows2012" {
-  instance_type               = "t2.micro"
-  ami                         = "ami-0a8afc66668399657"
-  subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
-  vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
-  key_name                    = "${aws_key_pair.temp_public_key.id}"
-  associate_public_ip_address = true
- 
-  tags {
-    Name = "windows2012-instance"
-    Owner = "${var.OWNER}"
-    Environment = "${var.ENVIRONMENT}"
-    Project = "${var.PROJECT}"
-  }
-} }

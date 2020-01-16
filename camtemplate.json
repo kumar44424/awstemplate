@@ -1,6 +1,6 @@
 {
    "name": "Template of Templates - AWS",
-   "description": "IBM Cloud",
+   "description": "AWS Cloud",
    "version": "1.0",
    "imageUrl": "./assets/svg/IBM_WebSphere_Standalone.svg",
    "image": "tp_WAS_standalone.png",
@@ -8,8 +8,8 @@
    "status": "active",
    "manifest": {
      "template_type": "Terraform",
-     "template_format": "IBM",
-     "template_provider": "IBM",
+     "template_format": "AWS",
+     "template_provider": "AWS",
      "template": {
        "templateData": "",
        "templateVariables": "",
@@ -25,7 +25,7 @@
    "metadata": {
      "displayName": "Template of Templates - AWS",
      "providerDisplayName": "AWS",
-     "longDescription": "Deploys 3 OPerating systems Windows, RHEL and Cent OS on IBM Cloud.",
+     "longDescription": "Deploys 4 Operating systems Windows, RHEL, Kali and Cent OS on AWS Cloud.",
      "bullets": [
        {
          "title": "Clouds",
@@ -33,11 +33,11 @@
        },
        {
          "title": "Operating systems supported",
-         "description": "RedHat_7_64, CentOS, WIN_2012"
+         "description": "RedHat_7_64, CentOS, WIN_2012, Kali Linux, Paloalto FW"
        },
        {
          "title": "Topology",
-         "description": "IBM Cloud: 3 virtual machine"
+         "description": "AWS Cloud: 4 virtual machines and 1 Firewall"
        },
        {
          "title": "Default virtual machine settings",

@@ -458,9 +458,4 @@ resource "aws_instance" "RHEL" {
     Environment = "${var.ENVIRONMENT}"
     Project = "${var.PROJECT}"
   }
-
-
-    }
-    }
- 
-  
+} }

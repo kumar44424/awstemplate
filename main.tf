@@ -415,14 +415,11 @@ resource "aws_network_interface" "acme_pafw_instance_private" {
 resource "aws_instance" "RHEL" {
   instance_type               = "t2.micro"
   ami                         = "ami-003b12a9a1ee83922"
-#  subnet_id                   = "${aws_subnet.cam_aws_subnet_private.id}"
-#  vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
+  subnet_id                   = "${aws_subnet.cam_aws_subnet_private.id}"
+  vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
   key_name                    = "${aws_key_pair.temp_public_key.id}"
- associate_public_ip_address = true
-  network_interface {
-    network_interface_id = "${aws_network_interface.acme_pafw_instance_private.id}"
-    device_index = 0
- }
+  associate_public_ip_address = true
+ 
   tags {
     Name = "RHEL-instance"
     Owner = "${var.OWNER}"

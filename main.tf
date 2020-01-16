@@ -443,20 +443,7 @@ resource "aws_instance" "RHEL" {
     Project = "${var.PROJECT}"
   }
     }
-  resource "aws_instance" "kali" {
-  instance_type               = "t2.micro"
-  ami                         = "ami-06fea6d88c62d4e26"
-  subnet_id                   = "${aws_subnet.cam_aws_subnet_public.id}"
-  vpc_security_group_ids      = ["${aws_security_group.cam_aws_sg.id}"]
-  key_name                    = "${aws_key_pair.temp_public_key.id}"
-  associate_public_ip_address = true
- 
-  tags {
-    Name = "kali-instance"
-    Owner = "${var.OWNER}"
-    Environment = "${var.ENVIRONMENT}"
-    Project = "${var.PROJECT}"
-  }
+  
    resource "aws_instance" "windows2012" {
   instance_type               = "t2.micro"
   ami                         = "ami-0a8afc66668399657"
